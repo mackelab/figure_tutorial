@@ -164,7 +164,7 @@ def syncoverleaf(c, fig):
     c.run(f"cp {basepath}/{fig_names[fig]}/fig/*.pdf {overleaf}/figs/")
     c.run(f"cp {basepath}/{fig_names[fig]}/fig/*.png {overleaf}/figs/")
 ```
-Now, from the command-line, you can run `invoke sync_overleaf 1` and it will convert your `svg` to `pdf` and `png` and copy the files to the overleaf folder. Finally, you only have to commit your changes and upload to overleaf:
+Now, from the command-line, you can run `invoke syncoverleaf 1` and it will convert your `svg` to `pdf` and `png` and copy the files to the overleaf folder. Finally, you only have to commit your changes and upload to overleaf:
 ```
 cd /path/to/your/overleaf
 git commit -am "new figures"
