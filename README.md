@@ -4,6 +4,9 @@ This tutorial will cover my (Michael's) workflow for generating figures in `pyth
 - [Training deep neural density estimators to identify mechanistic models of neural dynamics](https://elifesciences.org/articles/56261)  
 - [Energy efficient network activity from disparate circuit parameters](https://www.biorxiv.org/content/10.1101/2021.07.30.454484v4.abstract)
 
+Here's an example:
+![Alt text](example_fig.png?raw=true "Title")
+
 ## Goals
 - Consistent fontsizes, ticksizes, etc.  
 - Generating figures completely from `python` and the command line, without using `inkscape` or `illustrator`.
