@@ -115,7 +115,7 @@ fig_names = {
 }
 
 @task
-def convert_to_png_pdf(c, fig):
+def convertpngpdf(c, fig):
     _convertsvg2pdf(c, fig)
     _convertpdf2png(c, fig)
 
@@ -129,11 +129,9 @@ def _convertsvg2pdf(c, fig):
         for f in range(len(fig_names)):
             _convert_svg2pdf(c, str(f + 1))
         return
-    pathlist = Path("{bp}/{fn}/fig/".format(bp=basepath, fn=fig_names[fig])).glob(
-        "*.svg"
-    )
+    pathlist = Path(f"{basepath}/{fig_names[fig]}/fig/").glob("*.svg")
     for path in pathlist:
-        c.run("inkscape {} --export-pdf={}.pdf".format(str(path), str(path)[:-4]))
+        c.run(f"inkscape {str(path)} --export-pdf={str(path)[:-4]}.pdf")
 
 
 @task
@@ -142,14 +140,10 @@ def _convertpdf2png(c, fig):
         for f in range(len(fig_names)):
             _convert_pdf2png(c, str(f + 1))
         return
-    pathlist = Path("{bp}/{fn}/fig/".format(bp=basepath, fn=fig_names[fig])).glob(
-        "*.pdf"
-    )
+    pathlist = Path(f"{basepath}/{fig_names[fig]}/fig/").glob("*.pdf")
     for path in pathlist:
         c.run(
-            'inkscape {} --export-png={}.png -b "white" --export-dpi=250'.format(
-                str(path), str(path)[:-4]
-            )
+            f'inkscape {str(path)} --export-png={str(path)[:-4]}.png -b "white" --export-dpi=250'
         )
 ```
 
@@ -161,18 +155,10 @@ Finally, you will want to upload the `png` and `pdf` to overleaf. Again, we woul
 overleaf = "/path/to/your/overleaf"
 
 @task
-def sync_overleaf(c, fig):
-    convert_to_png_pdf(c, fig)
-    c.run(
-        "cp {bp}/{fn}/fig/*.pdf {ol}/figs/ ".format(
-            bp=basepath, fn=fig_names[fig], ol=overleaf
-        )
-    )
-    c.run(
-        "cp {bp}/{fn}/fig/*.png {ol}/figs/ ".format(
-            bp=basepath, fn=fig_names[fig], ol=overleaf
-        )
-    )
+def syncoverleaf(c, fig):
+    convertpngpdf(c, fig)
+    c.run(f"cp {basepath}/{fig_names[fig]}/fig/*.pdf {overleaf}/figs/")
+    c.run(f"cp {basepath}/{fig_names[fig]}/fig/*.png {overleaf}/figs/")
 ```
 Now, from the command-line, you can run `invoke sync_overleaf 1` and it will convert your `svg` to `pdf` and `png` and copy the files to the overleaf folder. Finally, you only have to commit your changes and upload to overleaf:
 ```
