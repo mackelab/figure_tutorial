@@ -41,7 +41,7 @@ I recommend using the following filestructure within your repo:
 All the code you import is in the `name_of_your_project` folder. The `paper` folder takes care of generating the figures. I recommend one subfolder for each figure (e.g. `fig1`). Each of these subfolders contains the `notebooks` that are used to generate the figure, an `svg` folder in which the individual panels will lie (see later), and a `fig` folder which contains the final figures that are used in your paper.
 
 ## Part 1: Using a `matplotlib` stylefile
-In order to make your figures look pretty, you can use a stylefile. This repo constains the stylefile which we used for the papers mentioned above (filename: `.matplotlibrc`). This file defines the linewidths, ticklengths, removes the top and right axes, etc. You can use the file as such:
+In order to make your figures look pretty, you can use a stylefile. This repo constains the stylefile which we used for the papers mentioned above (filename: `.matplotlibrc`). This file defines the linewidths, ticklengths and removes the top and right axes, etc. You can use the file as follows:
 ```python
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -51,7 +51,7 @@ with mpl.rc_context(fname="../../../.matplotlibrc"):
 ```
 
 ## Part 2: Using `svgutils` to compose multipanel figures
-In science, you often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). Note that I use `svgutils==0.3.1`. The devs of `svgutils` made major changes in `v0.3.2` in how panelsizes are interpreted which I absolutely do not get along with. Anyways...first, save each panel individually as `svg`:
+You often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). Note that I use `svgutils==0.3.1`. The devs of `svgutils` made major changes in `v0.3.2` in how panel-sizes are interpreted and I absolutely do not get along with their changes. Anyways...first, save each panel individually as `svg`:
 ```python
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -103,7 +103,7 @@ svg("../fig/fig.svg")
 
 ## Part 3: Using `invoke` to convert `svg` to `png` or `pdf`
 
-We now have our final figure as `svg` file. For `overleaf`, we have to convert it to `png` or `pdf`. Of course, you could just open inkscape, import the `svg`, and export it as `png`. However, this is a bit tedious. Instead, we would like to do this from the commandline. I recommend to use [invoke](https://www.pyinvoke.org/) to convert `svg` to `png` and `pdf`. Paste the following into a file `tasks.py` in the root folder of your repo and adapt the `basepath` variable:
+We now have our final figure as `svg` file. For `overleaf`, we have to convert it to `png` or `pdf`. Of course, you could just open inkscape, import the `svg`, and export it as `png`. However, this is a bit tedious. Instead, we would like to do this from the commandline. I recommend using [invoke](https://www.pyinvoke.org/) to convert `svg` to `png` and `pdf`. Paste the following into a file `tasks.py` in the root folder of your repo and adapt the `basepath` variable:
 ```python
 from invoke import task
 from pathlib import Path
