@@ -88,6 +88,7 @@ f.save("../fig/fig.svg")
 svg("../fig/fig.svg")
 
 ## Part 3: Using `invoke` to convert `svg` to `png` or `pdf`
+
 We now have our final figure as `svg` file. For `overleaf`, we have to convert it to `png` or `pdf`. Of course, you could just open inkscape, import the `svg`, and export it as `png`. However, this is a bit tedious. Instead, we would like to do this from the commandline. I recommend to use [invoke](https://www.pyinvoke.org/) to convert `svg` to `png` and `pdf`. Paste the following into a file `tasks.py` in the root folder of your repo and adapt the `overleaf` and `basepath` variables:
 ```python
 from invoke import task
@@ -103,7 +104,6 @@ fig_names = {
     "2": "paper/fig2",
     "3": "paper/fig3",
 }
-
 
 @task
 def convert_to_png_pdf(c, fig):
@@ -154,6 +154,7 @@ def _convertpdf2png(c, fig):
             )
         )
 ```
+
 Now, from the commandline, run `invoke convert_to_png_pdf 1`. This will convert the `svg` of `fig1` to `pdf` and `png` and save them in the `fig` folder.
 
 ## Part 4: Syncing the `files` with overleaf from the commandline  
