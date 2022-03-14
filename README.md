@@ -4,13 +4,12 @@ This tutorial will cover my (Michael's) workflow for generating figures in `pyth
 - [Training deep neural density estimators to identify mechanistic models of neural dynamics](https://elifesciences.org/articles/56261)  
 - [Energy efficient network activity from disparate circuit parameters](https://www.biorxiv.org/content/10.1101/2021.07.30.454484v4.abstract)
 
-All code that is described in this tutorial can also be found in this repo.
-
 ## Goals
 - Consistent fontsizes, ticksizes, etc.  
 - Generating figures completely from `python` and the command line, without using `inkscape` or `illustrator`.
 
 ## Ingredients
+We will go through the workflow in five parts. Note that all code that is described in these parts can also be found in this repo.
 Part 0: Recommended filestructure (optional)  
 Part 1: Using a `matplotlib` stylefile  
 Part 2: Using `svgutils` to compose multipanel figures  
