@@ -47,7 +47,7 @@ with mpl.rc_context(fname=".matplotlib"):
 ```
 
 ## Part 2: Using `svgutils` to compose multipanel figures
-In science, you often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). Note that I use `svgutils==0.3.1`, they made major changes in how panelsizes are interpreted afterwards which I absolutely do not get along with. First, save each panel individually as `svg`:
+In science, you often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). Note that I use `svgutils==0.3.1`. The devs of `svgutils` made major changes in `v0.3.2` in how panelsizes are interpreted which I absolutely do not get along with. Anyways...first, save each panel individually as `svg`:
 ```python
 import matplotlib as mpl
 import matplotlib.pyplot as plt
