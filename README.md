@@ -13,7 +13,7 @@ We will go through the workflow in five parts. Note that all code that is descri
 
 Part 0: Recommended filestructure (optional)  
 Part 1: Using a `matplotlib` stylefile  
-Part 2: Using `svgutils` to compose multipanel figures  
+Part 2: Using `svgutils==0.3.1` to compose multipanel figures  
 Part 3: Using `invoke` to convert `svg` to `png` or `pdf`  
 Part 4: Syncing the `files` with overleaf from the commandline  
 
@@ -47,7 +47,7 @@ with mpl.rc_context(fname=".matplotlib"):
 ```
 
 ## Part 2: Using `svgutils` to compose multipanel figures
-In science, you often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). First, save each panel individually as `svg`:
+In science, you often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). Note that I use `svgutils==0.3.1`, they made major changes in how panelsizes are interpreted afterwards which I absolutely do not get along with. First, save each panel individually as `svg`:
 ```python
 import matplotlib as mpl
 import matplotlib.pyplot as plt
