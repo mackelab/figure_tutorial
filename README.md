@@ -42,7 +42,7 @@ In order to make your figures look pretty, you can use a stylefile. This repo co
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-with mpl.rc_context(fname=".matplotlib"):
+with mpl.rc_context(fname="../../../.matplotlibrc"):
     plt.plot([0.0, 1.0], [1.0, 2.0])
 ```
 
@@ -52,18 +52,25 @@ In science, you often want to be able to flexibly compose multi-panel figures an
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-with mpl.rc_context(fname=".matplotlib"):
+with mpl.rc_context(fname="../../../.matplotlibrc"):
+    fig, ax = plt.subplots(1, 1, figsize=(4, 3))
     plt.plot([0.0, 1.0], [1.0, 2.0])
     plt.savefig("../svg/panel_a.svg")
     
-with mpl.rc_context(fname=".matplotlib"):
+with mpl.rc_context(fname="../../../.matplotlibrc"):
+    fig, ax = plt.subplots(1, 1, figsize=(4, 3))
     plt.plot([1.0, 2.0], [1.0, -2.0])
     plt.savefig("../svg/panel_b.svg")
 ```
 
 Second, we use `svgutils` to compose the multipanel figure:
 ```python
+import time
+import IPython.display as IPd
 from svgutils.compose import *
+
+def svg(img):
+    IPd.display(IPd.HTML('<img src="{}" / >'.format(img, time.time())))
 
 # > Inkscape pixel is 1/90 of an inch, other software usually uses 1/72.
 # > http://www.inkscapeforum.com/viewtopic.php?f=6&t=5964
@@ -72,17 +79,17 @@ svg_scale = 1.25  # set this to 1.25 for Inkscape, 1.0 otherwise
 # Panel letters in Helvetica Neue, 12pt, Medium
 kwargs_text = {'size': '12pt', 'font': 'Arial', 'weight': '800'}
 
-f = Figure("20.3cm", "14.1cm",
+f = Figure("20.3cm", "7.1cm",
            
     Panel(
           SVG("../svg/panel_a.svg").scale(svg_scale),
           Text("a", -5, 2.0, **kwargs_text),
-    ).move(5, 0),
+    ).move(10, 20),
     
     Panel(
           SVG("../svg/panel_b.svg").scale(svg_scale),
           Text("b", -5, 2.0, **kwargs_text),
-    ).move(5, 0),
+    ).move(400, 20),
 )
 
 !mkdir -p fig
