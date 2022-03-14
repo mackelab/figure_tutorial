@@ -153,7 +153,7 @@ def _convertpdf2png(c, fig):
 
 Now, from the commandline, run `invoke convert_to_png_pdf 1`. This will convert the `svg` of `fig1` to `pdf` and `png` and save them in the `fig` folder.
 
-## Part 4: Syncing the `files` with overleaf from the commandline  
+## Part 4: Syncing the files with `overleaf` and `git` from the commandline  
 Finally, you will want to upload the `png` and `pdf` to overleaf. Again, we would like to do this from the commandline. To do so, we can first use `git` to create a local copy of the overleaf project, see [here](https://www.overleaf.com/learn/how-to/Using_Git_and_GitHub). Second, we will add a task to our `tasks.py` file which will directly copy the files from our repository folder to the overleaf folder. Add the following to `tasks.py` and adapt the `overleaf` variable:
 ```python
 overleaf = "/path/to/your/overleaf"
