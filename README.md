@@ -4,6 +4,8 @@ This tutorial will cover my (Michael's) workflow for generating figures in `pyth
 - [Training deep neural density estimators to identify mechanistic models of neural dynamics](https://elifesciences.org/articles/56261)  
 - [Energy efficient network activity from disparate circuit parameters](https://www.biorxiv.org/content/10.1101/2021.07.30.454484v4.abstract)
 
+All code that is described in this tutorial can also be found in this repo.
+
 ## Goals
 - Consistent fontsizes, ticksizes, etc.  
 - Generating figures completely from `python` and the command line, without using `inkscape` or `illustrator`.
@@ -90,12 +92,11 @@ svg("../fig/fig.svg")
 
 ## Part 3: Using `invoke` to convert `svg` to `png` or `pdf`
 
-We now have our final figure as `svg` file. For `overleaf`, we have to convert it to `png` or `pdf`. Of course, you could just open inkscape, import the `svg`, and export it as `png`. However, this is a bit tedious. Instead, we would like to do this from the commandline. I recommend to use [invoke](https://www.pyinvoke.org/) to convert `svg` to `png` and `pdf`. Paste the following into a file `tasks.py` in the root folder of your repo and adapt the `overleaf` and `basepath` variables:
+We now have our final figure as `svg` file. For `overleaf`, we have to convert it to `png` or `pdf`. Of course, you could just open inkscape, import the `svg`, and export it as `png`. However, this is a bit tedious. Instead, we would like to do this from the commandline. I recommend to use [invoke](https://www.pyinvoke.org/) to convert `svg` to `png` and `pdf`. Paste the following into a file `tasks.py` in the root folder of your repo and adapt the `basepath` variable:
 ```python
 from invoke import task
 from pathlib import Path
 
-overleaf = "/path/to/your/overleaf"
 basepath = "/path/to/your/repo"
 
 open_cmd = "open"
@@ -109,18 +110,7 @@ fig_names = {
 @task
 def convert_to_png_pdf(c, fig):
     _convertsvg2pdf(c, fig)
-    c.run(
-        "cp {bp}/{fn}/fig/*.pdf {ol}/figs/ ".format(
-            bp=basepath, fn=fig_names[fig], ol=overleaf
-        )
-    )
-
     _convertpdf2png(c, fig)
-    c.run(
-        "cp {bp}/{fn}/fig/*.png {ol}/figs/ ".format(
-            bp=basepath, fn=fig_names[fig], ol=overleaf
-        )
-    )
 
 
 ########################################################################################
@@ -159,7 +149,7 @@ def _convertpdf2png(c, fig):
 Now, from the commandline, run `invoke convert_to_png_pdf 1`. This will convert the `svg` of `fig1` to `pdf` and `png` and save them in the `fig` folder.
 
 ## Part 4: Syncing the `files` with overleaf from the commandline  
-Finally, you will want to upload the `png` and `pdf` to overleaf. Again, we would like to do this from the commandline. To do so, we can first use `git` to create a local copy of the overleaf project, see [here](https://www.overleaf.com/learn/how-to/Using_Git_and_GitHub). Second, we will add a task to our `tasks.py` file which will directly copy the files from our repository folder to the overleaf folder. Add the following to `tasks.py`:
+Finally, you will want to upload the `png` and `pdf` to overleaf. Again, we would like to do this from the commandline. To do so, we can first use `git` to create a local copy of the overleaf project, see [here](https://www.overleaf.com/learn/how-to/Using_Git_and_GitHub). Second, we will add a task to our `tasks.py` file which will directly copy the files from our repository folder to the overleaf folder. Add the following to `tasks.py` and adapt the `overleaf` variable:
 ```python
 overleaf = "/path/to/your/overleaf"
 
