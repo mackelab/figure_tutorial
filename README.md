@@ -15,7 +15,7 @@ Part 0: Recommended filestructure (optional)
 Part 1: Using a `matplotlib` stylefile  
 Part 2: Using `svgutils==0.3.1` to compose multipanel figures  
 Part 3: Using `invoke` to convert `svg` to `png` or `pdf`  
-Part 4: Syncing the `files` with overleaf from the commandline  
+Part 4: Syncing the files with `overleaf` and `git` from the commandline  
 
 ## Part 0: Recommended filestructure (optional)
 I recommend using the following filestructure within your repo:
