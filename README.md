@@ -5,6 +5,7 @@ This tutorial will cover my (Michael's) workflow for generating figures in `pyth
 - [Energy efficient network activity from disparate circuit parameters](https://www.biorxiv.org/content/10.1101/2021.07.30.454484v4.abstract)
 
 Here's an example:
+
 ![Alt text](example_fig.png?raw=true "Title")
 
 ## Goals
