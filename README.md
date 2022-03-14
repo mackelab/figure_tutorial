@@ -13,7 +13,7 @@ We will go through the workflow in five parts. Note that all code that is descri
 
 Part 0: Recommended filestructure (optional)  
 Part 1: Using a `matplotlib` stylefile  
-Part 2: Using `svgutils` to compose multipanel figures  
+Part 2: Using `svgutils==0.3.1` to compose multipanel figures  
 Part 3: Using `invoke` to convert `svg` to `png` or `pdf`  
 Part 4: Syncing the `files` with overleaf from the commandline  
 
@@ -42,28 +42,35 @@ In order to make your figures look pretty, you can use a stylefile. This repo co
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-with mpl.rc_context(fname=".matplotlib"):
+with mpl.rc_context(fname="../../../.matplotlibrc"):
     plt.plot([0.0, 1.0], [1.0, 2.0])
 ```
 
 ## Part 2: Using `svgutils` to compose multipanel figures
-In science, you often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). First, save each panel individually as `svg`:
+In science, you often want to be able to flexibly compose multi-panel figures and add small letters (`a`, `b`, ...) to the figure. You can do this with [svgutils](https://svgutils.readthedocs.io/en/latest/). Note that I use `svgutils==0.3.1`. The devs of `svgutils` made major changes in `v0.3.2` in how panelsizes are interpreted which I absolutely do not get along with. Anyways...first, save each panel individually as `svg`:
 ```python
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-with mpl.rc_context(fname=".matplotlib"):
+with mpl.rc_context(fname="../../../.matplotlibrc"):
+    fig, ax = plt.subplots(1, 1, figsize=(4, 3))
     plt.plot([0.0, 1.0], [1.0, 2.0])
     plt.savefig("../svg/panel_a.svg")
     
-with mpl.rc_context(fname=".matplotlib"):
+with mpl.rc_context(fname="../../../.matplotlibrc"):
+    fig, ax = plt.subplots(1, 1, figsize=(4, 3))
     plt.plot([1.0, 2.0], [1.0, -2.0])
     plt.savefig("../svg/panel_b.svg")
 ```
 
 Second, we use `svgutils` to compose the multipanel figure:
 ```python
+import time
+import IPython.display as IPd
 from svgutils.compose import *
+
+def svg(img):
+    IPd.display(IPd.HTML('<img src="{}" / >'.format(img, time.time())))
 
 # > Inkscape pixel is 1/90 of an inch, other software usually uses 1/72.
 # > http://www.inkscapeforum.com/viewtopic.php?f=6&t=5964
@@ -72,17 +79,17 @@ svg_scale = 1.25  # set this to 1.25 for Inkscape, 1.0 otherwise
 # Panel letters in Helvetica Neue, 12pt, Medium
 kwargs_text = {'size': '12pt', 'font': 'Arial', 'weight': '800'}
 
-f = Figure("20.3cm", "14.1cm",
+f = Figure("20.3cm", "7.1cm",
            
     Panel(
           SVG("../svg/panel_a.svg").scale(svg_scale),
           Text("a", -5, 2.0, **kwargs_text),
-    ).move(5, 0),
+    ).move(10, 20),
     
     Panel(
           SVG("../svg/panel_b.svg").scale(svg_scale),
           Text("b", -5, 2.0, **kwargs_text),
-    ).move(5, 0),
+    ).move(400, 20),
 )
 
 !mkdir -p fig
@@ -108,7 +115,7 @@ fig_names = {
 }
 
 @task
-def convert_to_png_pdf(c, fig):
+def convertpngpdf(c, fig):
     _convertsvg2pdf(c, fig)
     _convertpdf2png(c, fig)
 
@@ -122,11 +129,9 @@ def _convertsvg2pdf(c, fig):
         for f in range(len(fig_names)):
             _convert_svg2pdf(c, str(f + 1))
         return
-    pathlist = Path("{bp}/{fn}/fig/".format(bp=basepath, fn=fig_names[fig])).glob(
-        "*.svg"
-    )
+    pathlist = Path(f"{basepath}/{fig_names[fig]}/fig/").glob("*.svg")
     for path in pathlist:
-        c.run("inkscape {} --export-pdf={}.pdf".format(str(path), str(path)[:-4]))
+        c.run(f"inkscape {str(path)} --export-pdf={str(path)[:-4]}.pdf")
 
 
 @task
@@ -135,14 +140,10 @@ def _convertpdf2png(c, fig):
         for f in range(len(fig_names)):
             _convert_pdf2png(c, str(f + 1))
         return
-    pathlist = Path("{bp}/{fn}/fig/".format(bp=basepath, fn=fig_names[fig])).glob(
-        "*.pdf"
-    )
+    pathlist = Path(f"{basepath}/{fig_names[fig]}/fig/").glob("*.pdf")
     for path in pathlist:
         c.run(
-            'inkscape {} --export-png={}.png -b "white" --export-dpi=250'.format(
-                str(path), str(path)[:-4]
-            )
+            f'inkscape {str(path)} --export-png={str(path)[:-4]}.png -b "white" --export-dpi=250'
         )
 ```
 
@@ -154,18 +155,10 @@ Finally, you will want to upload the `png` and `pdf` to overleaf. Again, we woul
 overleaf = "/path/to/your/overleaf"
 
 @task
-def sync_overleaf(c, fig):
-    convert_to_png_pdf(c, fig)
-    c.run(
-        "cp {bp}/{fn}/fig/*.pdf {ol}/figs/ ".format(
-            bp=basepath, fn=fig_names[fig], ol=overleaf
-        )
-    )
-    c.run(
-        "cp {bp}/{fn}/fig/*.png {ol}/figs/ ".format(
-            bp=basepath, fn=fig_names[fig], ol=overleaf
-        )
-    )
+def syncoverleaf(c, fig):
+    convertpngpdf(c, fig)
+    c.run(f"cp {basepath}/{fig_names[fig]}/fig/*.pdf {overleaf}/figs/")
+    c.run(f"cp {basepath}/{fig_names[fig]}/fig/*.png {overleaf}/figs/")
 ```
 Now, from the command-line, you can run `invoke sync_overleaf 1` and it will convert your `svg` to `pdf` and `png` and copy the files to the overleaf folder. Finally, you only have to commit your changes and upload to overleaf:
 ```
