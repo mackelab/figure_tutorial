@@ -9,7 +9,7 @@ This tutorial will cover my (Michael's) workflow for generating figures in `pyth
 - Generating figures completely from `python` and the command line, without using `inkscape` or `illustrator`.
 
 ## Ingredients
-We will go through the workflow in five parts. Note that all code that is described in these parts can also be found in this repo.
+We will go through the workflow in five parts. Note that all code that is described in these parts can also be found in this repo.  
 Part 0: Recommended filestructure (optional)  
 Part 1: Using a `matplotlib` stylefile  
 Part 2: Using `svgutils` to compose multipanel figures  
