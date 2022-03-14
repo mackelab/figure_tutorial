@@ -86,6 +86,7 @@ f = Figure("20.3cm", "14.1cm",
 !mkdir -p fig
 f.save("../fig/fig.svg")
 svg("../fig/fig.svg")
+```
 
 ## Part 3: Using `invoke` to convert `svg` to `png` or `pdf`
 
