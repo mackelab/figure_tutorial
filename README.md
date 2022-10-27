@@ -2,7 +2,7 @@
 
 This tutorial will cover my (Michael's) workflow for generating figures in `python`. It is completely based on Jan-Matthis' workflow. The figures that are created in this tutorial follow the style of the ones in the following two papers:  
 - [Training deep neural density estimators to identify mechanistic models of neural dynamics](https://elifesciences.org/articles/56261)  
-- [Energy efficient network activity from disparate circuit parameters](https://www.biorxiv.org/content/10.1101/2021.07.30.454484v4.abstract)
+- [Energy efficient network activity from disparate circuit parameters](https://www.pnas.org/doi/10.1073/pnas.2207632119)
 
 Here's an example:
 
