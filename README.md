@@ -4,6 +4,8 @@ This tutorial will cover my (Michael's) workflow for generating figures in `pyth
 - [Training deep neural density estimators to identify mechanistic models of neural dynamics](https://elifesciences.org/articles/56261)  
 - [Energy efficient network activity from disparate circuit parameters](https://www.pnas.org/doi/10.1073/pnas.2207632119)
 
+You may also be interested in the [Latex lab template for journal submissions](https://github.com/mackelab/tex_template/tree/main) or the [sbi bibtex collection](https://github.com/mackelab/sbi_bibtex/tree/main).
+
 Here's an example:
 
 ![Alt text](example_fig.png?raw=true "Title")
