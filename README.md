@@ -12,7 +12,7 @@ Here's an example of the figure created with the workflow presented in this repo
 
 ## Goals
 - Consistent fontsizes, ticksizes, etc.  
-- Generating figures completely from `python` and the command line, without using `inkscape` or `illustrator`.
+- Generating figures completely from `Python` and the command line, without manually editing them in `inkscape` or `illustrator`.
 
 ## Ingredients
 We will go through the workflow in five parts. Note that all code that is described in these parts can also be found in this repo.  
