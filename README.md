@@ -1,6 +1,6 @@
 # Tutorial for making figures
 
-This tutorial will cover my (Michael's) workflow for generating figures in `python`. It is completely based on Jan-Matthis' workflow. The figures that are created in this tutorial follow the style of the ones in the following two papers:  
+This tutorial will cover my (@michaeldeistler) workflow for generating figures in `Python`. I was taught this workflow by @jan-matthis. The figures that are created in this tutorial follow the style of the ones in the following two papers:  
 - [Training deep neural density estimators to identify mechanistic models of neural dynamics](https://elifesciences.org/articles/56261)  
 - [Energy efficient network activity from disparate circuit parameters](https://www.pnas.org/doi/10.1073/pnas.2207632119)
 
@@ -21,7 +21,7 @@ Part 0: Recommended filestructure (optional)
 Part 1: Using a `matplotlib` stylefile  
 Part 2: Using `svgutils==0.3.1` to compose multipanel figures  
 Part 3: Using `invoke` to convert `svg` to `png` or `pdf`  
-Part 4: Syncing the files with `overleaf` and `git` from the commandline  
+(Optional: Part 4: Syncing the files with `overleaf` and `git` from the commandline)  
 
 ## Part 0: Recommended filestructure (optional)
 I recommend using the following filestructure within your repo:
@@ -155,7 +155,7 @@ def _convertpdf2png(c, fig):
 
 Now, from the commandline, run `invoke convertpngpdf 1`. This will convert the `svg` of `fig1` to `pdf` and `png` and save them in the `fig` folder.
 
-## Part 4: Syncing the files with `overleaf` and `git` from the commandline  
+## Optional: Part 4: Syncing the files with `overleaf` and `git` from the commandline  
 Finally, you will want to upload the `png` and `pdf` to overleaf. Again, we would like to do this from the commandline. To do so, we can first use `git` to create a local copy of the overleaf project, see [here](https://www.overleaf.com/learn/how-to/Using_Git_and_GitHub). Second, we will add a task to our `tasks.py` file which will directly copy the files from our repository folder to the overleaf folder. Add the following to `tasks.py` and adapt the `overleaf` variable:
 ```python
 overleaf = "/path/to/your/overleaf"
